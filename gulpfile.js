@@ -13,7 +13,8 @@ const browserSync = require('browser-sync').create();
 
 const paths = {
     styles: {
-        src: 'src/styles/**/*.scss',
+        src: 'src/styles/style.scss',
+        stylewatch: 'src/styles/**/*.scss',
         dest: 'dist/css/'
     },
     scripts: {
@@ -83,7 +84,7 @@ function watch() {
         }
     })
     gulp.watch(paths.html.dest).on('change', browserSync.reload)
-    gulp.watch(paths.styles.src, styles)
+    gulp.watch(paths.styles.stylewatch, styles)
     gulp.watch(paths.html.src, html)
     gulp.watch(paths.scripts.src, scripts)
     gulp.watch(paths.images.src, img)
