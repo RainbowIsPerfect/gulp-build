@@ -8,14 +8,14 @@
     <title>Test</title>
 </head>
 <body>
-    <div>
-        <h1>Heading</h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. C
-            upiditate blanditiis aliquid culpa ex, molestias delectus fuga dolorem eveniet. Provident, libero.
-        </p>
-        <a href="#">Lorem ipsum dolor sit amet.</a>
-        <script src="js/main.min.js"></script>
+    <div class="wrapper">
+        @@include('includes/header.html')
+        <main class="main">
+            <p class="main__text">Version 1</p>
+            <a class="main__link main__link--hovered" href="https://github.com/RainbowIsPerfect/gulp-build-v1">Check GitHub repository</a>
+        </main>
+        @@include('includes/footer.html')
     </div>
+    <script src="js/main.min.js"></script>
 </body>
 </html>

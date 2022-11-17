@@ -7,7 +7,9 @@ const concat = require('gulp-concat');
 const autoprefix = require('gulp-autoprefixer');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
+const fileinclude = require('gulp-file-include');
 const browserSync = require('browser-sync').create();
+
 
 const paths = {
     styles: {
@@ -23,13 +25,18 @@ const paths = {
         dest: 'dist/img'
     },
     html: {
-        src: 'src/*.html',
+        src: 'src/**/*.html',
         dest: 'dist'
     }
 }
 
 function del() {
     return gulp.src('dist/**/', {read: false})
+        .pipe(clean());
+}
+
+function delincludes() {
+    return gulp.src('dist/includes/**/', {read: false})
         .pipe(clean());
 }
 
@@ -63,6 +70,7 @@ function img() {
 
 function html() {
     return gulp.src(paths.html.src)
+        .pipe(fileinclude())
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest(paths.html.dest))
         .pipe(browserSync.stream())
@@ -81,9 +89,10 @@ function watch() {
     gulp.watch(paths.images.src, img)
 }
 
-const build = gulp.series(del, html, gulp.parallel(styles, scripts, img), watch)
+const build = gulp.series(del, html, gulp.parallel(styles, scripts, img), delincludes, watch)
 
 exports.del = del;
+exports.delincludes = delincludes;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
