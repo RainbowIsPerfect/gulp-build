@@ -22,6 +22,7 @@
     "gulp-newer": "^1.4.0",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
+    "gulp-webp": "^4.0.1",
     "sass": "^1.56.1"
   },
   "browserslist": [

@@ -10,6 +10,7 @@ const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
 const newer = require('gulp-newer');
+const webp = require('gulp-webp');
 const browserSync = require('browser-sync').create();
 
 
@@ -67,8 +68,16 @@ function scripts() {
 function img() {
     return gulp.src(paths.images.src)
         .pipe(newer(paths.images.dest))
-        .pipe(imagemin())
+        .pipe(webp())
         .pipe(gulp.dest(paths.images.dest))
+        .pipe(gulp.src(paths.images.src))
+        .pipe(newer(paths.images.dest))
+        .pipe(imagemin({
+            progressive: true,
+            optimizationLevel: 3
+        }))
+        .pipe(gulp.dest(paths.images.dest))
+        .pipe(browserSync.stream())
 }
 
 function html() {
