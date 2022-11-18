@@ -58,8 +58,8 @@ function styles() {
 
 function scripts() {
     return gulp.src(paths.scripts.src)
-        .pipe(uglify())
         .pipe(concat('main.min.js'))
+        .pipe(uglify())
         .pipe(gulp.dest(paths.scripts.dest))
         .pipe(browserSync.stream())
 }
