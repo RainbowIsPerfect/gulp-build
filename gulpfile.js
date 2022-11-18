@@ -47,6 +47,7 @@ function styles() {
         .pipe(autoprefix({
             cascade: false
         }))
+        .pipe(gulp.dest(paths.styles.dest))
         .pipe(cleanCSS({
             level: 2
         }))
