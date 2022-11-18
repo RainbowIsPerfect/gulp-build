@@ -1,5 +1,6 @@
 const gulp = require('gulp');
-const clean = require('gulp-clean');
+// const clean = require('gulp-clean');
+const del = require('del');
 const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
@@ -8,6 +9,7 @@ const autoprefix = require('gulp-autoprefixer');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
+const newer = require('gulp-newer');
 const browserSync = require('browser-sync').create();
 
 
@@ -31,14 +33,12 @@ const paths = {
     }
 }
 
-function del() {
-    return gulp.src('dist/**/', {read: false})
-        .pipe(clean());
+function clean() {
+    return del(['dist/*', '!dist/img'])
 }
 
 function delincludes() {
-    return gulp.src('dist/includes/**/', {read: false})
-        .pipe(clean());
+    return del('dist/includes/')
 }
 
 function styles() {
@@ -65,6 +65,7 @@ function scripts() {
 
 function img() {
     return gulp.src(paths.images.src)
+        .pipe(newer(paths.images.dest))
         .pipe(imagemin())
         .pipe(gulp.dest(paths.images.dest))
 }
@@ -90,9 +91,9 @@ function watch() {
     gulp.watch(paths.images.src, img)
 }
 
-const build = gulp.series(del, html, gulp.parallel(styles, scripts, img), delincludes, watch)
+const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), delincludes, watch)
 
-exports.del = del;
+exports.clean = clean;
 exports.delincludes = delincludes;
 exports.styles = styles;
 exports.scripts = scripts;
