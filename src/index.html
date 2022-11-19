@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +8,20 @@
     <link rel="stylesheet" href="css/style.min.css">
     <title>Test</title>
 </head>
+
 <body>
     <div class="wrapper">
         @@include('includes/header.html')
         <main class="main">
-            <p class="main__text">Version 1</p>
-            <a class="main__link main__link--hovered" href="https://github.com/RainbowIsPerfect/gulp-build-v1">Check GitHub repository</a>
+            <a class="main__link main__link--hovered" href="https://github.com/RainbowIsPerfect/gulp-build-v1"
+                target="_blank">Check GitHub repository</a>
+            <div class="main__imagebox">
+                <img class="main__image" src="img/test-img.jpg" alt="">
+            </div>
         </main>
         @@include('includes/footer.html')
     </div>
     <script src="js/main.min.js"></script>
 </body>
+
 </html>

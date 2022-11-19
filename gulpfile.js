@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-// const clean = require('gulp-clean');
 const del = require('del');
 const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
@@ -11,6 +10,7 @@ const htmlmin = require('gulp-htmlmin');
 const fileinclude = require('gulp-file-include');
 const newer = require('gulp-newer');
 const webp = require('gulp-webp');
+const webpHtml = require('gulp-webp-html-nosvg');
 const browserSync = require('browser-sync').create();
 
 
@@ -29,17 +29,14 @@ const paths = {
         dest: 'dist/img'
     },
     html: {
-        src: 'src/**/*.html',
+        src: 'src/*.html',
+        htmlwatch: 'src/**/*.html',
         dest: 'dist'
     }
 }
 
 function clean() {
     return del(['dist/*', '!dist/img'])
-}
-
-function delincludes() {
-    return del('dist/includes/')
 }
 
 function styles() {
@@ -83,7 +80,8 @@ function img() {
 function html() {
     return gulp.src(paths.html.src)
         .pipe(fileinclude())
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(webpHtml())
+        // .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest(paths.html.dest))
         .pipe(browserSync.stream())
 }
@@ -96,15 +94,14 @@ function watch() {
     })
     gulp.watch(paths.html.dest).on('change', browserSync.reload)
     gulp.watch(paths.styles.stylewatch, styles)
-    gulp.watch(paths.html.src, html)
+    gulp.watch(paths.html.htmlwatch, html)
     gulp.watch(paths.scripts.src, scripts)
     gulp.watch(paths.images.src, img)
 }
 
-const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), delincludes, watch)
+const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), watch)
 
 exports.clean = clean;
-exports.delincludes = delincludes;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
