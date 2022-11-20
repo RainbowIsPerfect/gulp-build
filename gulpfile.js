@@ -11,10 +11,12 @@ const fileinclude = require('gulp-file-include');
 const newer = require('gulp-newer');
 const webp = require('gulp-webp');
 const webpHtml = require('gulp-webp-html-nosvg');
-// const fonter = require('gulp-fonter');
+const htmlpretty = require('gulp-pretty-html');
+const fonter = require('gulp-fonter');
 const woff = require('gulp-ttf2woff');
 const woff2 = require('gulp-ttf2woff2');
 const browserSync = require('browser-sync').create();
+const git = require('gulp-git');
 
 
 
@@ -38,26 +40,44 @@ const paths = {
         dest: 'dist'
     },
     fonts: {
-        src: 'src/fonts/*.ttf',
+        src: 'src/fonts/',
         dest: 'dist/fonts/',
+    },
+    git: {
+        src: '/'
     }
 }
 
+function togit() {
+    return gulp.src('src/', 'gulpfile.js', 'package.json', 'README.md')
+        .pipe(git.add())
+        .pipe(git.commit('initial commit'))
+}
+
+exports.togit = togit;
 
 function clean() {
-    return del(['dist/*', '!dist/img', '!dist/fonts'])
+    return del(['dist', '!dist/img', '!dist/fonts'])
+}
+
+function tottf() {
+    return gulp.src(`${paths.fonts.src}*.otf`)
+        .pipe(fonter({
+            formats: ['ttf']
+        }))
+        .pipe(gulp.dest(paths.fonts.src))
 }
 
 function towoff() {
-    return gulp.src(paths.fonts.src)
-        .pipe(newer(paths.images.dest))
+    return gulp.src(`${paths.fonts.src}*.ttf`)
+        .pipe(newer(paths.fonts.dest))
         .pipe(woff())
         .pipe(gulp.dest(paths.fonts.dest))
 }
 
 function towoff2() {
-    return gulp.src(paths.fonts.src)
-        .pipe(newer(paths.images.dest))
+    return gulp.src(`${paths.fonts.src}*.ttf`)
+        .pipe(newer(paths.fonts.dest))
         .pipe(woff2())
         .pipe(gulp.dest(paths.fonts.dest))
 }
@@ -79,6 +99,8 @@ function styles() {
 
 function scripts() {
     return gulp.src(paths.scripts.src)
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest(paths.scripts.dest))
         .pipe(concat('main.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.scripts.dest))
@@ -104,7 +126,9 @@ function html() {
     return gulp.src(paths.html.src)
         .pipe(fileinclude())
         .pipe(webpHtml())
-        // .pipe(htmlmin({ collapseWhitespace: true }))
+        // if needed
+        // .pipe(htmlmin({ collapseWhitespace: true })) 
+        .pipe(htmlpretty())
         .pipe(gulp.dest(paths.html.dest))
         .pipe(browserSync.stream())
 }
@@ -120,18 +144,20 @@ function watch() {
     gulp.watch(paths.html.htmlwatch, html)
     gulp.watch(paths.scripts.src, scripts)
     gulp.watch(paths.images.src, img)
-    gulp.watch(paths.fonts.src, towoff)
-    gulp.watch(paths.fonts.src, towoff2)
+    gulp.watch(`${paths.fonts.src}*.otf`, tottf)
+    gulp.watch(`${paths.fonts.src}*.ttf`, towoff)
+    gulp.watch(`${paths.fonts.src}*.ttf`, towoff2)
 }
 
-const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), towoff, towoff2, watch)
+const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), tottf, towoff, towoff2, watch)
 
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
 exports.img = img;
-exports.towoff2 = woff2;
+exports.tottf = tottf;
+exports.towoff2 = towoff2;
 exports.towoff = towoff;
 exports.watch = watch;
 exports.build = build;
