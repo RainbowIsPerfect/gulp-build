@@ -52,6 +52,7 @@ function togit() {
     return gulp.src('src/', 'gulpfile.js', 'package.json', 'README.md')
         .pipe(git.add())
         .pipe(git.commit('initial commit'))
+
 }
 
 exports.togit = togit;
