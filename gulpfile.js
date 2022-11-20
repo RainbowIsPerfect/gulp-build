@@ -54,7 +54,8 @@ function addcommit() {
         .pipe(git.commit('initial commit'))
 }
 
-function push() {
+function push(err) {
+    if (err) throw err;
     git.push('origin', 'master');
 }
 
