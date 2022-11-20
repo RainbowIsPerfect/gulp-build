@@ -27,8 +27,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-webp": "^4.0.1",
     "gulp-webp-html-nosvg": "^1.1.1",
-    "sass": "^1.56.1",
-    "ttf2woff2": "^4.0.5"
+    "sass": "^1.56.1"
   },
   "browserslist": [
     ">0.2%",
