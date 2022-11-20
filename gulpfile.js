@@ -11,7 +11,11 @@ const fileinclude = require('gulp-file-include');
 const newer = require('gulp-newer');
 const webp = require('gulp-webp');
 const webpHtml = require('gulp-webp-html-nosvg');
+// const fonter = require('gulp-fonter');
+const woff = require('gulp-ttf2woff');
+const woff2 = require('gulp-ttf2woff2');
 const browserSync = require('browser-sync').create();
+
 
 
 const paths = {
@@ -26,17 +30,36 @@ const paths = {
     },
     images: {
         src: 'src/img/**',
-        dest: 'dist/img'
+        dest: 'dist/img/'
     },
     html: {
         src: 'src/*.html',
         htmlwatch: 'src/**/*.html',
         dest: 'dist'
+    },
+    fonts: {
+        src: 'src/fonts/*.ttf',
+        dest: 'dist/fonts/',
     }
 }
 
+
 function clean() {
-    return del(['dist/*', '!dist/img'])
+    return del(['dist/*', '!dist/img', '!dist/fonts'])
+}
+
+function towoff() {
+    return gulp.src(paths.fonts.src)
+        .pipe(newer(paths.images.dest))
+        .pipe(woff())
+        .pipe(gulp.dest(paths.fonts.dest))
+}
+
+function towoff2() {
+    return gulp.src(paths.fonts.src)
+        .pipe(newer(paths.images.dest))
+        .pipe(woff2())
+        .pipe(gulp.dest(paths.fonts.dest))
 }
 
 function styles() {
@@ -97,15 +120,19 @@ function watch() {
     gulp.watch(paths.html.htmlwatch, html)
     gulp.watch(paths.scripts.src, scripts)
     gulp.watch(paths.images.src, img)
+    gulp.watch(paths.fonts.src, towoff)
+    gulp.watch(paths.fonts.src, towoff2)
 }
 
-const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), watch)
+const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), towoff, towoff2, watch)
 
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
 exports.img = img;
+exports.towoff2 = woff2;
+exports.towoff = towoff;
 exports.watch = watch;
 exports.build = build;
 exports.default = build;
