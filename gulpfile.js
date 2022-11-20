@@ -53,7 +53,7 @@ function togit() {
         .pipe(git.add())
         .pipe(git.commit('initial commit'))
         .on('end', function() {
-            git.push('origin', branch, function(err) {
+            git.push( function(err) {
                 if(err) throw (err);
             });
             });
