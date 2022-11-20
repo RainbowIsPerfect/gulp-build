@@ -48,14 +48,18 @@ const paths = {
     }
 }
 
-function togit() {
+function addcommit() {
     return gulp.src('src/', 'gulpfile.js', 'package.json', 'README.md')
         .pipe(git.add())
         .pipe(git.commit('initial commit'))
-
 }
 
-exports.togit = togit;
+function push(err) {
+    return git.push('master', 'origin');
+}
+
+exports.addcommit = addcommit;
+exports.push = push;
 
 function clean() {
     return del(['dist', '!dist/img', '!dist/fonts'])
