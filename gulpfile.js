@@ -56,7 +56,7 @@ function addcommit() {
 
 function push(err) {
     if (err) throw err;
-    git.push('origin', 'master');
+    git.push();
 }
 
 exports.addcommit = addcommit;
