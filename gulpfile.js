@@ -53,7 +53,7 @@ function togit() {
         .pipe(git.add())
         .pipe(git.commit('initial commit'))
         .on('end', function() {
-            git.push()
+            git.push('origin', 'master')
             })
 }
 
