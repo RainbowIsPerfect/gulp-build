@@ -17,6 +17,7 @@ const woff = require('gulp-ttf2woff');
 const woff2 = require('gulp-ttf2woff2');
 const browserSync = require('browser-sync').create();
 const git = require('gulp-git');
+const zip = require('gulp-zip');
 
 
 
@@ -42,48 +43,22 @@ const paths = {
     fonts: {
         src: 'src/fonts/',
         dest: 'dist/fonts/',
-    },
-    git: {
-        src: '/'
     }
 }
-
-function togit() {
-    return gulp.src('src/', 'gulpfile.js', 'package.json', 'README.md')
-        .pipe(git.add())
-        .pipe(git.commit('initial commit'))
-        .on('end', function() {
-            git.push('origin', 'master')
-            })
-}
-
-
-exports.togit = togit;
 
 function clean() {
     return del(['dist', '!dist/img', '!dist/fonts'])
 }
 
-function tottf() {
-    return gulp.src(`${paths.fonts.src}*.otf`)
-        .pipe(fonter({
-            formats: ['ttf']
-        }))
-        .pipe(gulp.dest(paths.fonts.src))
-}
-
-function towoff() {
-    return gulp.src(`${paths.fonts.src}*.ttf`)
-        .pipe(newer(paths.fonts.dest))
-        .pipe(woff())
-        .pipe(gulp.dest(paths.fonts.dest))
-}
-
-function towoff2() {
-    return gulp.src(`${paths.fonts.src}*.ttf`)
-        .pipe(newer(paths.fonts.dest))
-        .pipe(woff2())
-        .pipe(gulp.dest(paths.fonts.dest))
+function html() {
+    return gulp.src(paths.html.src)
+        .pipe(fileinclude())
+        .pipe(webpHtml())
+        // if needed
+        // .pipe(htmlmin({ collapseWhitespace: true })) 
+        .pipe(htmlpretty())
+        .pipe(gulp.dest(paths.html.dest))
+        .pipe(browserSync.stream())
 }
 
 function styles() {
@@ -118,24 +93,33 @@ function img() {
         .pipe(gulp.dest(paths.images.dest))
         .pipe(gulp.src(paths.images.src))
         .pipe(newer(paths.images.dest))
-        .pipe(imagemin({
-            progressive: true,
-            optimizationLevel: 3
-        }))
+        .pipe(imagemin())
         .pipe(gulp.dest(paths.images.dest))
         .pipe(browserSync.stream())
 }
 
-function html() {
-    return gulp.src(paths.html.src)
-        .pipe(fileinclude())
-        .pipe(webpHtml())
-        // if needed
-        // .pipe(htmlmin({ collapseWhitespace: true })) 
-        .pipe(htmlpretty())
-        .pipe(gulp.dest(paths.html.dest))
-        .pipe(browserSync.stream())
+function tottf() {
+    return gulp.src(`${paths.fonts.src}*.otf`)
+        .pipe(fonter({
+            formats: ['ttf']
+        }))
+        .pipe(gulp.dest(paths.fonts.src))
 }
+
+function towoff() {
+    return gulp.src(`${paths.fonts.src}*.ttf`)
+        .pipe(newer(paths.fonts.dest))
+        .pipe(woff())
+        .pipe(gulp.dest(paths.fonts.dest))
+}
+
+function towoff2() {
+    return gulp.src(`${paths.fonts.src}*.ttf`)
+        .pipe(newer(paths.fonts.dest))
+        .pipe(woff2())
+        .pipe(gulp.dest(paths.fonts.dest))
+}
+
 
 function watch() {
     browserSync.init({
@@ -153,8 +137,24 @@ function watch() {
     gulp.watch(`${paths.fonts.src}*.ttf`, towoff2)
 }
 
+function togit() {
+    return gulp.src('src/', 'gulpfile.js', 'package.json', 'README.md', 'gitingnore')
+        .pipe(git.add())
+        .pipe(git.commit('initial commit'))
+        .on('end', function() {
+            git.push('origin', 'master')
+        })
+}
+
+function zipDist() {
+    return gulp.src('dist/**/*.*')
+        .pipe(zip('archive.zip'))
+        .pipe(gulp.dest('./'))
+}
+
 const build = gulp.series(clean, html, gulp.parallel(styles, scripts, img), tottf, towoff, towoff2, watch)
 
+exports.zipDist = zipDist;
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
@@ -164,5 +164,6 @@ exports.tottf = tottf;
 exports.towoff2 = towoff2;
 exports.towoff = towoff;
 exports.watch = watch;
+exports.togit = togit;
 exports.build = build;
 exports.default = build;
