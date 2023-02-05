@@ -9,15 +9,14 @@
     "gulp-file-include": "^2.3.0",
     "gulp-fonter": "^0.3.0",
     "gulp-git": "^2.10.1",
-    "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^7.1.0",
     "gulp-newer": "^1.4.0",
     "gulp-sass": "^5.1.0",
     "gulp-svgmin": "^4.1.0",
-    "gulp-ttf2woff": "^1.1.1",
     "gulp-ttf2woff2": "^4.0.1",
     "gulp-uglify": "^3.0.2",
     "gulp-webp": "^4.0.1",
     "gulp-webp-html-nosvg": "^1.1.1",
     "gulp-zip": "^5.1.0",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "gulp-pretty-html": "^2.0.10"
