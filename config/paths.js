@@ -6,7 +6,7 @@ export const paths = {
     },
     scripts: {
         src: 'src/scripts/**/*.js',
-        dest: 'dist/js/'
+        dest: 'dist/scripts/'
     },
     images: {
         src: 'src/img/**',

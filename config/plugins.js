@@ -1,7 +1,7 @@
 import browserSync from 'browser-sync';
-import del from 'del';
+import rename from "gulp-rename";
 
 export const plugins = {
     browserSync: browserSync,
-    del: del,
+    rename: rename,
 }

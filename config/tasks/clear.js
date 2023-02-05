@@ -1,3 +1,9 @@
+import {deleteAsync} from 'del';
+
 export const clear = () => {
-    return global.plugins.del(['dist', '!dist/img', '!dist/fonts'])
+    return deleteAsync(['dist/**', '!dist/img', '!dist/fonts'])
+}
+
+export const fullClear = () => {
+    return deleteAsync(['dist'])
 }

@@ -8,7 +8,7 @@ global = {
     plugins: plugins,
 }
 
-import { clear } from "./config/tasks/clear.js";
+import { clear, fullClear } from "./config/tasks/clear.js";
 import { html } from "./config/tasks/html.js";
 import { styles } from "./config/tasks/styles.js"
 import { img } from "./config/tasks/img.js";
@@ -32,6 +32,6 @@ const build = gulp.series(clear, html, styles, scripts, tottf, towoff2, img, gul
 gulp.task('default', build);
 
 export {build};
+export {fullClear};
 export {togit};
 export {zipDist};
-export {clear};
