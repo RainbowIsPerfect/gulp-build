@@ -1,24 +1,6 @@
-@import "fonts";
-@import "test";
+@use "./scss/components/wrapper";
+@use "./scss/components/header";
+@use "./scss/components/main";
+@use "./scss/components/footer";
 
-.header {
-    background-color: #5493a7;
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    &__heading {
-        margin-left: 30px;
-    }
-    &__logo {
-        width: 100px;
-        height: 100px;
-    }
-}
-.footer {
-    background-color: #5d88a5;
-    &__text {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
+

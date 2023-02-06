@@ -1,0 +1,13 @@
+@use "../mixins" as *;
+@use "../variables" as *;
+
+.header {
+    @include flex(flex-start, center);
+    padding: rem(15);
+    background-color: col(bg);
+    &__heading {
+        font-size: fs(lg);
+        color: col(text);
+    }
+}
+

@@ -1,0 +1,44 @@
+// Flexbox
+@mixin flex($justify: false, $align: false, $direction: false, $gap: false) {
+    display: flex;
+    @if ($justify) {
+        justify-content: $justify;
+    }
+    @if ($align) {
+        align-items: $align;
+    }
+    @if ($direction) {
+        flex-direction: $direction;
+    }
+    @if ($gap) {
+        gap: $gap;
+    }
+}
+
+// Position
+@mixin position($position, $top: false, $right: false, $bottom: false, $left: false, $z-index: false) {
+    position: $position;
+    @if ($top) {
+        top: $top;
+    }
+    @if ($left) {
+        left: $left;
+    }
+    @if ($bottom) {
+        bottom: $bottom;
+    }
+    @if ($right) {
+        right: $right;
+    }
+    @if ($z-index) {
+        z-index: $z-index;
+    }
+}
+
+// Position absolute center
+@mixin absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

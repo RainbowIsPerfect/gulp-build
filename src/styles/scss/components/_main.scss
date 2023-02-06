@@ -1,0 +1,18 @@
+@use "../mixins" as *;
+@use "../variables" as *;
+
+
+.main {
+    @include flex(center, center);
+    flex: 1 1 auto;
+    background-color: col(main-bg);
+    &__link {
+        text-decoration: none;
+        color: col(bg);
+        font-size: fs(lg);
+        transition: all 0.2s ease-in-out;
+        &:hover {
+            color: col(text);
+        }
+    }
+}

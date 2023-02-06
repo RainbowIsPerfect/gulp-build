@@ -1,0 +1,24 @@
+// Reset css
+@mixin reset {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+}
+
+// Fullsize body
+@mixin fullsize {
+    html, body {
+        height: 100%;
+    }
+}
+
+// Include wrapper
+@mixin container($mw: 1000, $paddingY: 0, $paddingX: 10) {
+    .container {
+        max-width: $mw + px;
+        margin: 0 auto;
+        padding: $paddingY + px $paddingX + px;
+    }
+}

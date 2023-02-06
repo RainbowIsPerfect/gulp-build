@@ -1,0 +1,13 @@
+@use "../mixins" as *;
+@use "../variables" as *;
+
+
+.footer {
+    @include flex(center, center);
+    padding: rem(20);
+    background-color: col(bg);
+    &__text {
+        font-size: fs(md);
+        color: col(text);
+    }
+}

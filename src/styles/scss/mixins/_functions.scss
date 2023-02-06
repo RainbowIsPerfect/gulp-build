@@ -1,0 +1,29 @@
+@use "sass:math";
+@use "../variables" as *;
+
+// px to rem
+@function rem($px) {
+	@return math.div($px, 16) + rem;
+}
+
+// color map
+@function col($key) {
+	@if map-has-key($colors , $key) {
+		@return map-get($colors, $key);
+	}
+}
+
+// font map
+@function fs($key) {
+	@if map-has-key($fonts , $key) {
+		$key: rem(map-get($fonts, $key));
+		@return $key;
+	}
+}
+
+// breakpoint map
+@function mq($key) {
+	@if map-has-key($breakpoints , $key) {
+		@return map-get($breakpoints, rem($key));
+	}
+}
