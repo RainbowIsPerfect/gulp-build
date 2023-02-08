@@ -2,6 +2,7 @@ import preSass from 'sass';
 import gulpSass from 'gulp-sass';
 import autoPrefixer from 'gulp-autoprefixer';
 import gulpCleanCss from 'gulp-clean-css';
+import cssbeautify from 'gulp-cssbeautify';
 
 const sass = gulpSass(preSass);
 
@@ -11,6 +12,7 @@ export const styles = () => {
         .pipe(autoPrefixer({
             cascade: false
         }))
+        .pipe(cssbeautify())
         .pipe(global.gulp.dest(global.paths.styles.dest))
         .pipe(gulpCleanCss({
             level: 2
