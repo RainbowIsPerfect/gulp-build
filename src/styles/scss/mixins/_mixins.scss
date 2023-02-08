@@ -1,3 +1,5 @@
+@use "functions" as *;
+
 // Flexbox
 @mixin flex($justify: false, $align: false, $direction: false, $gap: false) {
     display: flex;
@@ -41,4 +43,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+// Font-size using variables and REM function
+@mixin fs($size) {
+    font-size: font($size);
 }

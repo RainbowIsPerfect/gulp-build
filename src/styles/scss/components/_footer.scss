@@ -1,7 +1,6 @@
 @use "../mixins" as *;
 @use "../variables" as *;
 
-
 .footer {
     @include flex(center, center);
     padding: rem(20);

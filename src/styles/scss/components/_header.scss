@@ -2,12 +2,50 @@
 @use "../variables" as *;
 
 .header {
-    @include flex(flex-start, center);
-    padding: rem(15);
+    @include fs(md);
     background-color: col(bg);
-    &__heading {
-        font-size: fs(lg);
+    &__nav {
+        @include flex(space-between, center);
+        padding: 5px 0;
+    }
+    &__list {
+        @include flex(false, center);
+        list-style: none;
+    }
+    &__item {
+        margin-right: 20px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+    &__item-link {
         color: col(text);
+        text-decoration: none;
+        outline: transparent;
+        &:hover {
+            color: col(text-hover);
+        }
+        &:focus {
+            color: col(text-hover);
+        }
+    }
+    &__logo {
+        outline: transparent;
+        &:focus &-img {
+            fill: col(text-hover);
+        }
+    }
+    &__logo-img {
+        &:hover {
+            fill: col(text-hover);
+        }
     }
 }
 
+@media (max-width: mq(sm)){
+    .header{
+        &__item-link {
+            @include fs(sm);
+        }
+    }
+}

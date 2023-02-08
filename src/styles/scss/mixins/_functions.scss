@@ -14,7 +14,7 @@
 }
 
 // font map
-@function fs($key) {
+@function font($key) {
 	@if map-has-key($fonts , $key) {
 		$key: rem(map-get($fonts, $key));
 		@return $key;
@@ -24,6 +24,6 @@
 // breakpoint map
 @function mq($key) {
 	@if map-has-key($breakpoints , $key) {
-		@return map-get($breakpoints, rem($key));
+		@return map-get($breakpoints, $key) + px;
 	}
 }
